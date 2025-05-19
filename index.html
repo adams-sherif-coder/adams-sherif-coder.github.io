@@ -34,6 +34,28 @@
             }
         }
     </script>
+    <style>
+        /* Add custom transition for smoother menu animation */
+        .mobile-menu-panel {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .mobile-menu-panel.open {
+            transform: translateX(0);
+        }
+
+        .menu-backdrop {
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            pointer-events: none;
+        }
+
+        .menu-backdrop.open {
+            opacity: 0.5;
+            pointer-events: auto;
+        }
+    </style>
 </head>
 
 <body class="bg-cream font-body text-coffee-dark">
@@ -62,9 +84,8 @@
 
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="md:hidden fixed inset-0 z-40 hidden">
-        <div class="fixed inset-0 bg-black bg-opacity-50" id="menu-backdrop"></div>
-        <div
-            class="fixed inset-y-0 right-0 max-w-xs w-full bg-coffee-dark text-cream shadow-lg transform transition-transform duration-300 ease-in-out translate-x-full">
+        <div class="menu-backdrop fixed inset-0 bg-black" id="menu-backdrop"></div>
+        <div class="mobile-menu-panel fixed inset-y-0 right-0 max-w-xs w-full bg-coffee-dark text-cream shadow-lg">
             <div class="flex justify-between items-center p-4 border-b border-coffee">
                 <div class="text-xl font-display font-semibold">Menu</div>
                 <button id="close-menu-button" class="focus:outline-none">
@@ -85,7 +106,8 @@
         </div>
     </div>
 
-    <!-- Hero Section -->
+    <!-- Rest of your HTML content remains the same -->
+
     <section id="home" class="relative h-screen flex items-center justify-center bg-coffee-dark text-cream pt-16">
         <div class="absolute inset-0 bg-black opacity-40"></div>
         <div
@@ -99,8 +121,6 @@
                 Menu</a>
         </div>
     </section>
-
-    <!-- About Section -->
     <section id="about" class="py-20 bg-cream">
         <div class="container mx-auto px-6">
             <div class="flex flex-col md:flex-row items-center">
@@ -122,7 +142,6 @@
         </div>
     </section>
 
-    <!-- Menu Section -->
     <section id="menu" class="py-20 bg-sage-light text-coffee-dark">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl font-display font-semibold mb-12 text-center">Our Menu</h2>
@@ -205,7 +224,7 @@
         </div>
     </section>
 
-    <!-- Beans Section -->
+
     <section id="beans" class="py-20 bg-coffee text-cream">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl font-display font-semibold mb-12 text-center">Our Beans</h2>
@@ -220,8 +239,7 @@
                     <p class="text-cream mb-4">Floral and tea-like with notes of bergamot and lemon</p>
                     <div class="flex justify-between items-center">
                         <span class="font-medium">$18.00 / 12oz</span>
-                        <button class="bg-sage hover:bg-sage-dark px-4 py-2 rounded-full text-sm transition">Add to
-                            Cart</button>
+
                     </div>
                 </div>
 
@@ -234,8 +252,7 @@
                     <p class="text-cream mb-4">Balanced with caramel sweetness and nutty undertones</p>
                     <div class="flex justify-between items-center">
                         <span class="font-medium">$16.00 / 12oz</span>
-                        <button class="bg-sage hover:bg-sage-dark px-4 py-2 rounded-full text-sm transition">Add to
-                            Cart</button>
+
                     </div>
                 </div>
 
@@ -248,8 +265,7 @@
                     <p class="text-cream mb-4">Full-bodied with earthy tones and dark chocolate notes</p>
                     <div class="flex justify-between items-center">
                         <span class="font-medium">$17.50 / 12oz</span>
-                        <button class="bg-sage hover:bg-sage-dark px-4 py-2 rounded-full text-sm transition">Add to
-                            Cart</button>
+
                     </div>
                 </div>
             </div>
@@ -261,8 +277,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Contact Section -->
     <section id="contact" class="py-20 bg-cream">
         <div class="container mx-auto px-6">
             <div class="flex flex-col md:flex-row">
@@ -289,7 +303,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="bg-coffee-dark text-cream py-12">
         <div class="container mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between">
@@ -329,26 +342,25 @@
             </div>
         </div>
     </footer>
-
     <script>
         // Mobile menu functionality
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const closeMenuButton = document.getElementById('close-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         const menuBackdrop = document.getElementById('menu-backdrop');
-        const menuPanel = mobileMenu.querySelector('div > div');
+        const menuPanel = document.querySelector('.mobile-menu-panel');
 
         function openMenu() {
             mobileMenu.classList.remove('hidden');
             setTimeout(() => {
-                menuBackdrop.classList.remove('opacity-0');
-                menuPanel.classList.remove('translate-x-full');
+                menuBackdrop.classList.add('open');
+                menuPanel.classList.add('open');
             }, 20);
         }
 
         function closeMenu() {
-            menuBackdrop.classList.add('opacity-0');
-            menuPanel.classList.add('translate-x-full');
+            menuBackdrop.classList.remove('open');
+            menuPanel.classList.remove('open');
             setTimeout(() => {
                 mobileMenu.classList.add('hidden');
             }, 300);
