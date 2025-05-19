@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Castillo</title>
+    <title>Castillo Coffee - Artisanal Coffee Roasters</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Poppins:wght@300;400;500&display=swap"
@@ -38,7 +38,7 @@
 
 <body class="bg-cream font-body text-coffee-dark">
     <!-- Navigation -->
-    <nav class="bg-coffee-dark text-cream shadow-md">
+    <nav class="bg-coffee-dark text-cream shadow-md fixed w-full z-50">
         <div class="container mx-auto px-6 py-3">
             <div class="flex justify-between items-center">
                 <div class="text-2xl font-display font-semibold">Castillo Coffee</div>
@@ -49,7 +49,7 @@
                     <a href="#beans" class="hover:text-sage-light transition">Our Beans</a>
                     <a href="#contact" class="hover:text-sage-light transition">Contact</a>
                 </div>
-                <button class="md:hidden focus:outline-none">
+                <button id="mobile-menu-button" class="md:hidden focus:outline-none">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -60,8 +60,33 @@
         </div>
     </nav>
 
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden fixed inset-0 z-40 hidden">
+        <div class="fixed inset-0 bg-black bg-opacity-50" id="menu-backdrop"></div>
+        <div
+            class="fixed inset-y-0 right-0 max-w-xs w-full bg-coffee-dark text-cream shadow-lg transform transition-transform duration-300 ease-in-out translate-x-full">
+            <div class="flex justify-between items-center p-4 border-b border-coffee">
+                <div class="text-xl font-display font-semibold">Menu</div>
+                <button id="close-menu-button" class="focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+            <div class="p-4 space-y-4">
+                <a href="#home" class="block py-2 hover:text-sage-light transition">Home</a>
+                <a href="#about" class="block py-2 hover:text-sage-light transition">About</a>
+                <a href="#menu" class="block py-2 hover:text-sage-light transition">Menu</a>
+                <a href="#beans" class="block py-2 hover:text-sage-light transition">Our Beans</a>
+                <a href="#contact" class="block py-2 hover:text-sage-light transition">Contact</a>
+            </div>
+        </div>
+    </div>
+
     <!-- Hero Section -->
-    <section id="home" class="relative h-screen flex items-center justify-center bg-coffee-dark text-cream">
+    <section id="home" class="relative h-screen flex items-center justify-center bg-coffee-dark text-cream pt-16">
         <div class="absolute inset-0 bg-black opacity-40"></div>
         <div
             class="bg-[url('https://images.unsplash.com/photo-1445116572660-236099ec97a0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')] bg-cover bg-center absolute inset-0">
@@ -259,31 +284,7 @@
                         <p>(555) 123-4567</p>
                     </div>
                 </div>
-                <div class="md:w-1/2">
-                    <div class="bg-coffee-light p-8 rounded-lg shadow-md">
-                        <h3 class="text-2xl font-display font-medium mb-6 text-coffee-dark">Get in Touch</h3>
-                        <form>
-                            <div class="mb-4">
-                                <label for="name" class="block text-coffee-dark mb-2">Name</label>
-                                <input type="text" id="name"
-                                    class="w-full px-4 py-2 rounded border border-coffee focus:outline-none focus:ring-2 focus:ring-sage">
-                            </div>
-                            <div class="mb-4">
-                                <label for="email" class="block text-coffee-dark mb-2">Email</label>
-                                <input type="email" id="email"
-                                    class="w-full px-4 py-2 rounded border border-coffee focus:outline-none focus:ring-2 focus:ring-sage">
-                            </div>
-                            <div class="mb-4">
-                                <label for="message" class="block text-coffee-dark mb-2">Message</label>
-                                <textarea id="message" rows="4"
-                                    class="w-full px-4 py-2 rounded border border-coffee focus:outline-none focus:ring-2 focus:ring-sage"></textarea>
-                            </div>
-                            <button type="submit"
-                                class="bg-sage hover:bg-sage-dark text-cream px-6 py-3 rounded-full font-medium transition">Send
-                                Message</button>
-                        </form>
-                    </div>
-                </div>
+
             </div>
         </div>
     </section>
@@ -328,6 +329,41 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const closeMenuButton = document.getElementById('close-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuBackdrop = document.getElementById('menu-backdrop');
+        const menuPanel = mobileMenu.querySelector('div > div');
+
+        function openMenu() {
+            mobileMenu.classList.remove('hidden');
+            setTimeout(() => {
+                menuBackdrop.classList.remove('opacity-0');
+                menuPanel.classList.remove('translate-x-full');
+            }, 20);
+        }
+
+        function closeMenu() {
+            menuBackdrop.classList.add('opacity-0');
+            menuPanel.classList.add('translate-x-full');
+            setTimeout(() => {
+                mobileMenu.classList.add('hidden');
+            }, 300);
+        }
+
+        mobileMenuButton.addEventListener('click', openMenu);
+        closeMenuButton.addEventListener('click', closeMenu);
+        menuBackdrop.addEventListener('click', closeMenu);
+
+        // Close menu when clicking on a menu item
+        const menuItems = mobileMenu.querySelectorAll('a');
+        menuItems.forEach(item => {
+            item.addEventListener('click', closeMenu);
+        });
+    </script>
 </body>
 
 </html>
