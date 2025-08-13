@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-2xl font-bold mb-6">Message Responses</h1>
+
+        <div id="messages" class="space-y-4">
+            <!-- Messages will appear here -->
+        </div>
+
+        <div id="loading" class="text-center py-8">
+            Loading messages...
+        </div>
+
+        <div id="error" class="hidden text-red-500 py-4">
+            Failed to load messages. Please try again.
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://127.0.0.1:8000/api/answer'; // Change to your actual endpoint
+
+        async function fetchMessages() {
+            try {
+                const response = await fetch(API_URL);
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch');
+                }
+
+                const responseData = await response.json();
+                displayMessages(responseData.data); // Access the 'data' property
+            } catch (error) {
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('error').classList.remove('hidden');
+                console.error('Error:', error);
+            }
+        }
+
+        function displayMessages(messages) {
+            const container = document.getElementById('messages');
+            const loading = document.getElementById('loading');
+
+            loading.classList.add('hidden');
+
+            if (!messages || messages.length === 0) {
+                container.innerHTML = '<p class="text-gray-500">No messages found.</p>';
+                return;
+            }
+
+            container.innerHTML = messages.map(message => `
+                <div class="bg-white p-4 rounded shadow">
+                    <div class="text-sm text-gray-500 mb-1">
+                        ${new Date(message.created_at).toLocaleString()}
+                    </div>
+                    <div class="font-medium">
+                        ${message.message}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Load messages when page opens
+        fetchMessages();
+    </script>
+</body>
+
+</html>

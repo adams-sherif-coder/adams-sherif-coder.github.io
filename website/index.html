@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Jana</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap');
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #ffe4ec, #fff7f3, #ffe4ec);
+            background-size: 400% 400%;
+            animation: gradientShift 12s ease infinite;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3em;
+            text-align: center;
+            color: #ff77a9;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #ff77a9;
+            }
+
+            to {
+                text-shadow: 0 0 20px #ff99c9;
+            }
+        }
+
+        section {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+            animation: fadeInUp 1.5s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .highlight-note {
+            background: #ffebf3;
+            border: 2px solid #ff99c9;
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #ff4081;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 10px #ff99c9;
+            }
+
+            50% {
+                box-shadow: 0 0 20px #ff77a9;
+            }
+        }
+
+        .choices button {
+            display: block;
+            width: 80%;
+            margin: 15px auto;
+            padding: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            background-color: #ff77a9;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        .choices button:hover {
+            transform: scale(1.05);
+            background-color: #ff99c9;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .option-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .place-card {
+            background: #fff0f6;
+            border: 2px solid #ffb6d4;
+            border-radius: 15px;
+            padding: 15px;
+            width: 120px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+            color: #ff4081;
+        }
+
+        .place-card:hover {
+            background: #ffe4ec;
+            transform: scale(1.05);
+        }
+
+        .selected {
+            background: #ff99c9 !important;
+            color: white !important;
+            border-color: #ff77a9 !important;
+        }
+
+        input,
+        select {
+            padding: 12px;
+            margin: 15px auto;
+            font-size: 1em;
+            border-radius: 15px;
+            border: 2px solid #ffb6d4;
+            width: 80%;
+            max-width: 400px;
+            background-color: #fff9fb;
+            color: #ff4081;
+            transition: all 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #ff77a9;
+            box-shadow: 0 0 10px #ffb6d4;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator,
+        input[type="time"]::-webkit-calendar-picker-indicator {
+            filter: invert(70%) sepia(20%) saturate(1000%) hue-rotate(300deg);
+        }
+
+        .footer {
+            font-size: 0.9em;
+            color: #ff77a9;
+            margin-top: 30px;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .location-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .location-search {
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 15px;
+        }
+
+        .location-search input {
+            width: 100%;
+            padding: 12px 20px;
+            box-sizing: border-box;
+        }
+
+        .location-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .location-card {
+            background: #fff0f6;
+            border: 2px solid #ffb6d4;
+            border-radius: 15px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+            color: #ff4081;
+            font-size: 0.9em;
+        }
+
+        .location-card:hover {
+            background: #ffe4ec;
+            transform: scale(1.05);
+        }
+
+        .location-card.selected {
+            background: #ff99c9;
+            color: white;
+            border-color: #ff77a9;
+        }
+
+        button {
+            background-color: #ff77a9;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            margin: 10px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background-color: #ff99c9;
+            transform: scale(1.05);
+        }
+
+        .weather-display {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 20px;
+            border: 2px solid #ffb6d4;
+        }
+
+        .weather-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .weather-details {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .weather-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .weather-label {
+            font-size: 0.8em;
+            color: #ff77a9;
+        }
+
+        .weather-value {
+            font-weight: bold;
+            color: #ff4081;
+        }
+
+        .clothing-tip {
+            background: #fff0f6;
+            border: 2px dashed #ff77a9;
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
+        .final-message {
+            background: #fff0f6;
+            border: 2px solid #ffb6d4;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 500px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <section style="animation-delay: 0.3s;">
+        <h1>Good evening Señorita Jana</h1>
+    </section>
+
+    <section style="animation-delay: 0.6s;">
+        <p style="font-size: 1.3em; color: #444;">
+            I made this little page just for you, Jana.<br>
+            Here's the deal —since u dont like texting I'd like to hang out with you, and you get to choose your answer
+            below.
+        </p>
+    </section>
+
+    <section style="animation-delay: 0.8s;">
+        <div class="highlight-note">
+            If you say YES, you'll get to pick where, what to do, and when — all in style. 💗
+        </div>
+    </section>
+
+    <section class="choices" style="animation-delay: 1s;">
+        <button onclick="chooseMain('Yes')">Yes why not</button>
+        <button onclick="chooseMain('Maybe another time')">Maybe another time</button>
+        <button onclick="chooseMain('I have my reasons')">I have my reasons and I'd rather keep them to myself</button>
+    </section>
+
+    <section id="locationSection" class="hidden">
+        <h2>Which area should we go to?</h2>
+        <div class="location-container">
+            <div class="location-search">
+                <input type="text" placeholder="Search areas..." id="locationInput" onkeyup="filterLocations()"
+                    onclick="this.select();">
+            </div>
+            <div class="location-grid" id="locationGrid">
+                <div class="location-card" onclick="selectLocation(this, 'Louran')">Louran</div>
+                <div class="location-card" onclick="selectLocation(this, 'Zizinya')">Zizinya</div>
+                <div class="location-card" onclick="selectLocation(this, 'Lizabella')">Lizabella</div>
+                <div class="location-card" onclick="selectLocation(this, 'Sidi Gaber')">Sidi Gaber</div>
+                <div class="location-card" onclick="selectLocation(this, 'Smouha')">Smouha</div>
+                <div class="location-card" onclick="selectLocation(this, 'Shatby')">Shatby</div>
+                <div class="location-card" onclick="selectLocation(this, 'M7tt elraml')">M7tt elraml</div>
+                <div class="location-card" onclick="selectLocation(this, 'Janklees')">Janklees</div>
+                <div class="location-card" onclick="selectLocation(this, 'Roshdy')">Roshdy</div>
+                <div class="location-card" onclick="selectLocation(this, 'Gleem')">Gleem</div>
+                <div class="location-card" onclick="selectLocation(this, 'Sporting')">Sporting</div>
+                <div class="location-card" onclick="selectLocation(this, 'Kafr Abdo')">Kafr Abdo</div>
+            </div>
+        </div>
+        <button onclick="showPlaceOptions()" id="locationNextBtn" disabled>Next</button>
+    </section>
+
+    <section id="placeSection" class="hidden">
+        <h2>What do u think we should do?</h2>
+        <div class="option-grid">
+            <div class="place-card" onclick="selectPlace(this, '☕ Coffee Shop', 'Coffee Shop')">☕ Coffee</div>
+            <div class="place-card" onclick="selectPlace(this, '🍕 Pizza Place', 'Pizza Place')">🍕 Pizza</div>
+            <div class="place-card" onclick="selectPlace(this, '🍔 Burger Joint', 'Burger Joint')">🍔 Burger</div>
+            <div class="place-card" onclick="selectPlace(this, '🌵 تين شوكي عصير', 'تين شوكي عصير')">🌵 تين شوكي عصير
+            </div>
+        </div>
+    </section>
+
+    <section id="activitySection" class="hidden">
+        <h2>What shall we do there?</h2>
+        <select id="activitySelect">
+            <option value="">Select an activity...</option>
+        </select>
+        <br>
+        <button onclick="showDateTime()">Next</button>
+    </section>
+
+    <section id="dateTimeSection" class="hidden">
+        <h2>Pick a day in August</h2>
+        <input type="date" id="dateInput" min="2025-08-01" max="2025-08-31"><br>
+        <input type="time" id="timeInput"><br>
+        <div id="weatherInfo" class="weather-display">
+            <!-- Weather info will be inserted here by JavaScript -->
+        </div>
+        <div class="clothing-tip">
+            🌞 <strong>Hot weather tip:</strong> Avoid wearing black or dark colored clothes, jeans, or heavy fabrics as
+            it will be very hot!
+        </div>
+        <button onclick="finalizePlan()">Confirm</button>
+    </section>
+
+    <section id="finalMessage" class="hidden">
+        <div class="final-message">
+            <h2 style="color:#ff4081; margin-top: 0;">Plan Confirmed! 💗</h2>
+            <p id="planText"></p>
+            <div id="finalWeather" class="weather-display">
+                <!-- Weather info will be inserted here -->
+            </div>
+            <div class="clothing-tip">
+                🌞 <strong>Outfit suggestion:</strong> Wear light-colored, breathable fabrics to stay comfortable in the
+                heat!
+            </div>
+        </div>
+    </section>
+
+    <div class="footer">
+        Made exclusively for Jana 💗 Crafted with a dash of charm and a sprinkle of pink
+    </div>
+
+    <script>
+        // API Configuration
+        const API_URL = 'http://127.0.0.1:8000/api/answer'; // Change to your actual endpoint
+
+        // Application State
+        let selectedPlace = "";
+        let selectedPlaceText = ""; // no icons
+        let selectedLocation = "";
+
+        // Activities Data
+        const activities = {
+            "☕ Coffee Shop": ["Chat over cappuccinos", "Try latte art", "Taste desserts"],
+            "🍕 Pizza Place": ["Share a large pizza", "Taste all toppings", "Compete for best slice"],
+            "🍔 Burger Joint": ["Build your own burger", "Try the spicy special", "Challenge the mega burger"],
+            "🌵 تين شوكي عصير": ["عصير تين شوكي احمر", "عصير تين شوكي اصفر", "عصير تين شوكي مثلج"]
+        };
+
+        // August 2025 weather data for Alexandria, Egypt
+        const augustWeather = {
+            "2025-08-01": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "65%" },
+            "2025-08-02": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "63%" },
+            "2025-08-03": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "62%" },
+            "2025-08-04": { icon: "⛅", summary: "Partly Cloudy", high: 32, low: 26, humidity: "68%" },
+            "2025-08-05": { icon: "⛅", summary: "Partly Cloudy", high: 31, low: 25, humidity: "70%" },
+            "2025-08-06": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "65%" },
+            "2025-08-07": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "60%" },
+            "2025-08-08": { icon: "☀️", summary: "Sunny", high: 34, low: 28, humidity: "58%" },
+            "2025-08-09": { icon: "☀️", summary: "Sunny", high: 34, low: 28, humidity: "57%" },
+            "2025-08-10": { icon: "🌤️", summary: "Mostly Sunny", high: 33, low: 27, humidity: "59%" },
+            "2025-08-11": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "64%" },
+            "2025-08-12": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "65%" },
+            "2025-08-13": { icon: "⛅", summary: "Partly Cloudy", high: 31, low: 25, humidity: "70%" },
+            "2025-08-14": { icon: "⛅", summary: "Partly Cloudy", high: 31, low: 25, humidity: "72%" },
+            "2025-08-15": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "68%" },
+            "2025-08-16": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "63%" },
+            "2025-08-17": { icon: "☀️", summary: "Sunny", high: 34, low: 28, humidity: "60%" },
+            "2025-08-18": { icon: "☀️", summary: "Sunny", high: 34, low: 28, humidity: "58%" },
+            "2025-08-19": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "62%" },
+            "2025-08-20": { icon: "🌤️", summary: "Mostly Sunny", high: 32, low: 26, humidity: "65%" },
+            "2025-08-21": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "67%" },
+            "2025-08-22": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "63%" },
+            "2025-08-23": { icon: "☀️", summary: "Sunny", high: 34, low: 28, humidity: "59%" },
+            "2025-08-24": { icon: "☀️", summary: "Sunny", high: 34, low: 28, humidity: "58%" },
+            "2025-08-25": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "61%" },
+            "2025-08-26": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "65%" },
+            "2025-08-27": { icon: "⛅", summary: "Partly Cloudy", high: 31, low: 25, humidity: "70%" },
+            "2025-08-28": { icon: "⛅", summary: "Partly Cloudy", high: 31, low: 25, humidity: "72%" },
+            "2025-08-29": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "68%" },
+            "2025-08-30": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "63%" },
+            "2025-08-31": { icon: "☀️", summary: "Sunny", high: 34, low: 28, humidity: "60%" }
+        };
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            const today = new Date();
+            const august2025 = new Date(today.getFullYear() + (2025 - today.getFullYear()), 7, 1);
+            const dateStr = august2025.toISOString().split('T')[0];
+            document.getElementById('dateInput').value = dateStr;
+            updateWeatherDisplay(dateStr);
+        });
+
+        // Main choice handler
+        async function chooseMain(choice) {
+            let message = '';
+
+            if (choice === "Yes") {
+                document.getElementById("locationSection").classList.remove("hidden");
+                return;
+            } else if (choice === "Maybe another time") {
+                message = "maybe later";
+                alert("Okay, sorry for bothering you 😊");
+            } else if (choice === "I have my reasons") {
+                message = "i have my reasons";
+                alert("Okay, sorry for bothering you 😊");
+            }
+
+            // Send response to backend
+            await sendToBackend(message);
+        }
+
+        // Filter locations based on search input
+        function filterLocations() {
+            const input = document.getElementById("locationInput");
+            const filter = input.value.toUpperCase();
+            const cards = document.querySelectorAll(".location-card");
+
+            cards.forEach(card => {
+                const txtValue = card.textContent || card.innerText;
+                card.style.display = txtValue.toUpperCase().includes(filter) ? "" : "none";
+            });
+        }
+
+        // Location selection handler
+        function selectLocation(element, location) {
+            document.querySelectorAll(".location-card").forEach(card => card.classList.remove("selected"));
+            element.classList.add("selected");
+            selectedLocation = location;
+            document.getElementById("locationNextBtn").disabled = false;
+        }
+
+        // Show place options after location selection
+        function showPlaceOptions() {
+            document.getElementById("placeSection").classList.remove("hidden");
+            document.getElementById("locationSection").classList.add("hidden");
+        }
+
+        // Place selection handler
+        function selectPlace(element, placeWithIcon, placeTextOnly) {
+            document.querySelectorAll(".place-card").forEach(card => card.classList.remove("selected"));
+            element.classList.add("selected");
+
+            selectedPlace = placeWithIcon;       // For UI display
+            selectedPlaceText = placeTextOnly;   // For backend
+
+            const activitySelect = document.getElementById("activitySelect");
+            activitySelect.innerHTML = "<option value=''>Select an activity...</option>";
+
+            activities[placeWithIcon].forEach(act => {
+                let opt = document.createElement("option");
+                opt.value = act;
+                opt.innerText = act;
+                activitySelect.appendChild(opt);
+            });
+
+            document.getElementById("activitySection").classList.remove("hidden");
+        }
+
+
+        // Show date/time selection
+        function showDateTime() {
+            if (document.getElementById("activitySelect").value === "") {
+                alert("Please choose an activity!");
+                return;
+            }
+            document.getElementById("dateTimeSection").classList.remove("hidden");
+        }
+
+        // Update weather display
+        function updateWeatherDisplay(date) {
+            const weather = augustWeather[date];
+            const weatherInfo = document.getElementById('weatherInfo');
+
+            if (weather) {
+                weatherInfo.innerHTML = `
+                    <div class="weather-icon">${weather.icon}</div>
+                    <h3>${weather.summary}</h3>
+                    <div class="weather-details">
+                        <div class="weather-item">
+                            <span class="weather-label">High</span>
+                            <span class="weather-value">${weather.high}°C</span>
+                        </div>
+                        <div class="weather-item">
+                            <span class="weather-label">Low</span>
+                            <span class="weather-value">${weather.low}°C</span>
+                        </div>
+                        <div class="weather-item">
+                            <span class="weather-label">Humidity</span>
+                            <span class="weather-value">${weather.humidity}</span>
+                        </div>
+                    </div>
+                `;
+                weatherInfo.classList.remove('hidden');
+            } else {
+                weatherInfo.classList.add('hidden');
+            }
+        }
+
+        // Finalize plan and send to backend
+        async function finalizePlan() {
+            const date = document.getElementById("dateInput").value;
+            const time = document.getElementById("timeInput").value;
+            const activity = document.getElementById("activitySelect").value;
+
+            if (!date || !time) {
+                alert("Please select both date and time!");
+                return;
+            }
+
+            const weather = augustWeather[date];
+            const formattedDate = formatDate(date);
+            const message = `Adam and Jana will meet in ${selectedLocation} at ${selectedPlaceText} to have ${activity} on ${formattedDate} at ${time}.`;
+
+            // Update UI
+            document.getElementById("finalMessage").classList.remove("hidden");
+            document.getElementById("planText").innerHTML = message;
+
+            if (weather) {
+                document.getElementById('finalWeather').innerHTML = `
+                    <div class="weather-icon">${weather.icon}</div>
+                    <h3>Weather Forecast</h3>
+                    <p>${weather.summary} with highs of ${weather.high}°C and lows of ${weather.low}°C</p>
+                    <div class="weather-details">
+                        <div class="weather-item">
+                            <span class="weather-label">Humidity</span>
+                            <span class="weather-value">${weather.humidity}</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Send to backend
+            await sendToBackend(message);
+        }
+
+        // Helper function to send data to backend
+        async function sendToBackend(message) {
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+
+                if (!response.ok) {
+                    console.error('Failed to save answer');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // Format date to readable string
+        function formatDate(dateString) {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+
+        // Initialize weather display on date change
+        document.getElementById('dateInput').addEventListener('change', function () {
+            updateWeatherDisplay(this.value);
+        });
+    </script>
+</body>
+
+</html>
