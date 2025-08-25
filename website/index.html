@@ -324,7 +324,8 @@
 
     <section style="animation-delay: 0.8s;">
         <div class="highlight-note">
-            If you say YES, you'll get to pick where, what to do, and when — all in style. 💗
+            If you say YES, more will show right now down there in your websties like an options for u so you'll get to
+            pick where, what to do, and when — all in style. 💗
         </div>
     </section>
 
@@ -408,12 +409,12 @@
     </section>
 
     <div class="footer">
-        Made exclusively for Jana 💗 Crafted with a dash of charm and a sprinkle of pink
+        Made exclusively for Janjoun 💗 Crafted with a dash of charm and a sprinkle of pink
     </div>
 
     <script>
         // API Configuration
-        const API_URL = 'https://736ed962ee61.ngrok-free.app/api/answer'; // Change to your actual endpoint
+        const API_URL = 'https://38a496c94c4d.ngrok-free.app/api/answer'; // Change to your actual endpoint
 
         // Application State
         let selectedPlace = "";
@@ -429,38 +430,45 @@
         };
 
         // August 2025 weather data for Alexandria, Egypt
+
         const augustWeather = {
-            "2025-08-01": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "65%" },
-            "2025-08-02": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "63%" },
-            "2025-08-03": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "62%" },
-            "2025-08-04": { icon: "⛅", summary: "Partly Cloudy", high: 32, low: 26, humidity: "68%" },
-            "2025-08-05": { icon: "⛅", summary: "Partly Cloudy", high: 31, low: 25, humidity: "70%" },
-            "2025-08-06": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "65%" },
-            "2025-08-07": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "60%" },
-            "2025-08-08": { icon: "☀️", summary: "Sunny", high: 34, low: 28, humidity: "58%" },
-            "2025-08-09": { icon: "☀️", summary: "Sunny", high: 34, low: 28, humidity: "57%" },
-            "2025-08-10": { icon: "🌤️", summary: "Mostly Sunny", high: 33, low: 27, humidity: "59%" },
-            "2025-08-11": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "64%" },
-            "2025-08-12": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "65%" },
-            "2025-08-13": { icon: "⛅", summary: "Partly Cloudy", high: 31, low: 25, humidity: "70%" },
-            "2025-08-14": { icon: "⛅", summary: "Partly Cloudy", high: 31, low: 25, humidity: "72%" },
-            "2025-08-15": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "68%" },
-            "2025-08-16": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "63%" },
-            "2025-08-17": { icon: "☀️", summary: "Sunny", high: 34, low: 28, humidity: "60%" },
-            "2025-08-18": { icon: "☀️", summary: "Sunny", high: 34, low: 28, humidity: "58%" },
-            "2025-08-19": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "62%" },
-            "2025-08-20": { icon: "🌤️", summary: "Mostly Sunny", high: 32, low: 26, humidity: "65%" },
-            "2025-08-21": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "67%" },
-            "2025-08-22": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "63%" },
-            "2025-08-23": { icon: "☀️", summary: "Sunny", high: 34, low: 28, humidity: "59%" },
-            "2025-08-24": { icon: "☀️", summary: "Sunny", high: 34, low: 28, humidity: "58%" },
             "2025-08-25": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "61%" },
             "2025-08-26": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "65%" },
             "2025-08-27": { icon: "⛅", summary: "Partly Cloudy", high: 31, low: 25, humidity: "70%" },
             "2025-08-28": { icon: "⛅", summary: "Partly Cloudy", high: 31, low: 25, humidity: "72%" },
             "2025-08-29": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "68%" },
             "2025-08-30": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "63%" },
-            "2025-08-31": { icon: "☀️", summary: "Sunny", high: 34, low: 28, humidity: "60%" }
+            "2025-08-31": { icon: "☀️", summary: "Sunny", high: 34, low: 28, humidity: "60%" },
+            "2025-09-01": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "65%" },
+            "2025-09-02": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "63%" },
+            "2025-09-03": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "62%" },
+            "2025-09-04": { icon: "⛅", summary: "Partly Cloudy", high: 32, low: 26, humidity: "68%" },
+            "2025-09-05": { icon: "⛅", summary: "Partly Cloudy", high: 31, low: 25, humidity: "70%" },
+            "2025-09-06": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "65%" },
+            "2025-09-07": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "60%" },
+            "2025-09-08": { icon: "☀️", summary: "Sunny", high: 34, low: 28, humidity: "58%" },
+            "2025-09-09": { icon: "☀️", summary: "Sunny", high: 34, low: 28, humidity: "57%" },
+            "2025-09-10": { icon: "🌤️", summary: "Mostly Sunny", high: 33, low: 27, humidity: "59%" },
+            "2025-09-11": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "64%" },
+            "2025-09-12": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "65%" },
+            "2025-09-13": { icon: "⛅", summary: "Partly Cloudy", high: 31, low: 25, humidity: "70%" },
+            "2025-09-14": { icon: "⛅", summary: "Partly Cloudy", high: 31, low: 25, humidity: "72%" },
+            "2025-09-15": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "68%" },
+            "2025-09-16": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "63%" },
+            "2025-09-17": { icon: "☀️", summary: "Sunny", high: 34, low: 28, humidity: "60%" },
+            "2025-09-18": { icon: "☀️", summary: "Sunny", high: 34, low: 28, humidity: "58%" },
+            "2025-09-19": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "62%" },
+            "2025-09-20": { icon: "🌤️", summary: "Mostly Sunny", high: 32, low: 26, humidity: "65%" },
+            "2025-09-21": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "67%" },
+            "2025-09-22": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "63%" },
+            "2025-09-23": { icon: "☀️", summary: "Sunny", high: 34, low: 28, humidity: "59%" },
+            "2025-09-24": { icon: "☀️", summary: "Sunny", high: 34, low: 28, humidity: "58%" },
+            "2025-09-25": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "61%" },
+            "2025-09-26": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "65%" },
+            "2025-09-27": { icon: "⛅", summary: "Partly Cloudy", high: 31, low: 25, humidity: "70%" },
+            "2025-09-28": { icon: "⛅", summary: "Partly Cloudy", high: 31, low: 25, humidity: "72%" },
+            "2025-09-29": { icon: "☀️", summary: "Sunny", high: 32, low: 26, humidity: "68%" },
+            "2025-09-30": { icon: "☀️", summary: "Sunny", high: 33, low: 27, humidity: "63%" }
         };
 
         // Initialize on page load
