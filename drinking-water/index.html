@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Hydrate Aysola — Gentle reminders</title>
+    <meta name="description" content="Hydration reminder for Aysola — 2.7L daily, reminders, streaks." />
+    <style>
+        :root {
+            --bg: #fff9fa;
+            --card: #ffffff;
+            --accent: #6f1022;
+            /* deep burgundy */
+            --accent-2: #a83b4f;
+            /* softer burgundy */
+            --muted: #666666;
+            --glass: rgba(255, 255, 255, 0.6);
+            --radius: 14px;
+            --gap: 14px;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: linear-gradient(180deg, #fff7f8 0%, #fff 60%);
+            color: #222;
+            -webkit-font-smoothing: antialiased;
+            padding: 18px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 20px;
+            align-items: start;
+        }
+
+        header {
+            grid-column: 1/3;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .logo {
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 800;
+            font-size: 26px;
+            box-shadow: 0 8px 28px rgba(111, 16, 34, 0.12);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 20px
+        }
+
+        p.lead {
+            margin: 0;
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        .main {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 18px;
+            box-shadow: 0 8px 28px rgba(111, 16, 34, 0.06);
+        }
+
+        .side {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 18px;
+            box-shadow: 0 8px 28px rgba(111, 16, 34, 0.06);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(111, 16, 34, 0.12);
+            font-weight: 700;
+        }
+
+        .btn.ghost {
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid rgba(111, 16, 34, 0.08);
+            box-shadow: none
+        }
+
+        .btn.small {
+            padding: 8px 10px;
+            font-size: 13px;
+            border-radius: 10px
+        }
+
+        .big-title {
+            font-weight: 800;
+            font-size: 18px;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .units-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .unit {
+            background: linear-gradient(180deg, #fff, #fffefc);
+            border-radius: 12px;
+            padding: 12px;
+            border: 1px solid rgba(111, 16, 34, 0.06);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+            justify-content: center;
+            min-height: 110px;
+        }
+
+        .unit strong {
+            color: var(--accent);
+            font-size: 16px
+        }
+
+        .unit small {
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        .progress {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .progress .bar {
+            height: 14px;
+            background: #f2f2f2;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress .bar>i {
+            display: block;
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 100%);
+            border-radius: 999px;
+            transition: width 700ms cubic-bezier(.2, .8, .2, 1)
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .stat {
+            background: linear-gradient(180deg, #fff, #fff);
+            padding: 8px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.03)
+        }
+
+        .stat strong {
+            display: block;
+            color: var(--accent);
+            font-size: 16px
+        }
+
+        .stat small {
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        .mini-cups {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 10px
+        }
+
+        .mini-cup {
+            width: 44px;
+            height: 56px;
+            border-radius: 8px;
+            border: 2px solid rgba(111, 16, 34, 0.08);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            overflow: hidden;
+            background: #fff;
+            padding-bottom: 4px;
+        }
+
+        .mini-cup .fill {
+            width: 100%;
+            height: 0;
+            background: linear-gradient(180deg, var(--accent) 0%, var(--accent-2) 100%);
+            transition: height 700ms cubic-bezier(.2, .8, .2, 1)
+        }
+
+        .mini-cup small {
+            font-size: 10px;
+            color: var(--muted);
+            margin-top: 6px;
+            display: block;
+            text-align: center
+        }
+
+        .happy {
+            padding: 12px;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #fff8fb, #fff1f3);
+            border: 1px solid rgba(168, 59, 79, 0.08);
+            color: var(--accent);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+        }
+
+        footer.note {
+            grid-column: 1/3;
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+            padding-top: 6px
+        }
+
+        /* modal */
+        .modal {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.42);
+            padding: 20px;
+            z-index: 9999;
+        }
+
+        .modal-card {
+            width: 100%;
+            max-width: 820px;
+            background: var(--card);
+            padding: 26px;
+            border-radius: 14px;
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+        }
+
+        .modal-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .modal-head {
+            font-size: 34px;
+            color: var(--accent);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.02em;
+        }
+
+        .modal-sub {
+            font-size: 16px;
+            color: var(--muted)
+        }
+
+        .modal-right {
+            width: 240px;
+            flex-shrink: 0
+        }
+
+        /* small screens */
+        @media (max-width:880px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding-bottom: 60px
+            }
+
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px
+            }
+
+            .units-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+
+            .modal-card {
+                flex-direction: column;
+                align-items: stretch
+            }
+
+            .modal-right {
+                width: 100%
+            }
+        }
+
+        @media (max-width:520px) {
+            .units-grid {
+                grid-template-columns: 1fr
+            }
+
+            .logo {
+                width: 56px;
+                height: 56px;
+                font-size: 22px
+            }
+
+            .modal-head {
+                font-size: 28px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="app">
+        <header>
+            <div class="brand" aria-hidden="false">
+                <div class="logo">A</div>
+                <div>
+                    <h1>Hydrate Aysola</h1>
+                    <p class="lead">Simple, gentle reminders — daily target: <strong>2.7 L</strong></p>
+                </div>
+            </div>
+
+            <div style="margin-left:auto;display:flex;gap:10px;align-items:center">
+                <button class="btn small" id="btnTestNotify">Test Notification</button>
+                <button class="btn small ghost" id="btnHowItWorks">How it Works ❓</button>
+            </div>
+        </header>
+
+        <main class="main" role="main" aria-labelledby="mainTitle">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+                <div>
+                    <div class="big-title" id="mainTitle">Add a unit — track daily progress</div>
+                    <div style="color:var(--muted);font-size:13px">Tap a tile to add that amount. Reminders every
+                        <strong>45 minutes</strong> while this tab is open.</div>
+                </div>
+
+                <div style="text-align:right">
+                    <div style="font-size:12px;color:var(--muted)">Today</div>
+                    <div style="font-weight:800;font-size:16px;color:var(--accent)" id="todayDate"></div>
+                </div>
+            </div>
+
+            <div class="units-grid" id="unitButtons" aria-hidden="false">
+                <div class="unit" data-ml="225" role="button" tabindex="0" aria-pressed="false"
+                    onclick="addAmount(225)">
+                    <strong>Cup</strong>
+                    <small>225 ml — (1 of 12)</small>
+                    <button class="btn small" onclick="event.stopPropagation(); addAmount(225)">Add</button>
+                </div>
+
+                <div class="unit" data-ml="1500" role="button" tabindex="0" onclick="addAmount(1500)">
+                    <strong>Big Bottle</strong>
+                    <small>1500 ml</small>
+                    <div style="display:flex;gap:8px;margin-top:6px">
+                        <button class="btn small" onclick="event.stopPropagation(); addAmount(1500)">Add</button>
+                        <button class="btn small ghost" onclick="event.stopPropagation(); addAmount(750)">½</button>
+                    </div>
+                </div>
+
+                <div class="unit" data-ml="600" role="button" tabindex="0" onclick="addAmount(600)">
+                    <strong>Small Bottle</strong>
+                    <small>600 ml</small>
+                    <div style="display:flex;gap:8px;margin-top:6px">
+                        <button class="btn small" onclick="event.stopPropagation(); addAmount(600)">Add</button>
+                        <button class="btn small ghost" onclick="event.stopPropagation(); addAmount(300)">½</button>
+                        <button class="btn small ghost" onclick="event.stopPropagation(); addAmount(150)">¼</button>
+                    </div>
+                </div>
+
+                <div class="unit" style="min-width:160px;">
+                    <strong>Custom</strong>
+                    <small>Type ml</small>
+                    <div style="display:flex;gap:8px;margin-top:6px">
+                        <input id="customInput" type="number" placeholder="ml"
+                            style="flex:1;padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.06)">
+                        <button class="btn small" onclick="customAdd()">Add</button>
+                    </div>
+                </div>
+
+                <div class="unit" style="grid-column: span 3; padding:14px;">
+                    <div class="progress" aria-hidden="false">
+                        <div style="display:flex;justify-content:space-between;align-items:center">
+                            <div style="font-weight:800;color:var(--accent)" id="progressText">0 / 2700 ml</div>
+                            <div style="color:var(--muted)" id="progressPercent">0%</div>
+                        </div>
+                        <div class="bar" aria-hidden="true"><i id="mainProgress"></i></div>
+                        <div class="mini-cups" id="miniCups" aria-hidden="true"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+                <button class="btn" id="btnStartReminders">Start reminders</button>
+                <button class="btn ghost" id="btnStopReminders">Stop</button>
+                <button class="btn ghost" id="btnResetDay">Reset day</button>
+                <button class="btn ghost" id="btnExport">Export JSON</button>
+            </div>
+
+        </main>
+
+        <aside class="side" aria-label="Stats & streaks">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+                <div>
+                    <div style="font-size:12px;color:var(--muted)">History</div>
+                    <div style="font-weight:800;color:var(--accent)">Streaks & Totals</div>
+                </div>
+            </div>
+
+            <div class="stats" id="statsGrid">
+                <div class="stat">
+                    <small>Today</small>
+                    <strong id="statToday">0 ml</strong>
+                    <small id="statTodayCups" style="display:block;color:var(--muted)">0 cups</small>
+                </div>
+                <div class="stat">
+                    <small>This Week</small>
+                    <strong id="statWeek">0 ml</strong>
+                    <small id="statWeekDays" style="display:block;color:var(--muted)">0 days</small>
+                </div>
+                <div class="stat">
+                    <small>This Month</small>
+                    <strong id="statMonth">0 ml</strong>
+                    <small id="statMonthDays" style="display:block;color:var(--muted)">0 days</small>
+                </div>
+            </div>
+
+            <div style="margin-top:12px" class="stat" aria-hidden="false">
+                <small>Current streak (days reached goal)</small>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+                    <div style="font-weight:800;font-size:20px;color:var(--accent)" id="streakCount">0</div>
+                    <div style="text-align:right">
+                        <small>Best</small>
+                        <div style="font-weight:800;color:var(--accent)" id="bestStreak">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top:12px">
+                <div id="happyMessage" class="happy" style="display:none">🎉 Well done, Aysola — you hit your goal!
+                </div>
+            </div>
+
+            <div style="margin-top:10px;color:var(--muted);font-size:13px">
+                <div>Note: Notifications only work when this page (or a registered service worker) is active. For
+                    background push you'd need a PWA + server.</div>
+            </div>
+
+        </aside>
+
+        <footer class="note">Made with burgundy vibes ❤️ — bookmark this page for daily use.</footer>
+    </div>
+
+    <!-- How It Works Modal (first-time) -->
+    <div id="howModal" class="modal" style="display:none">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="howTitle">
+            <div class="modal-left">
+                <div id="howTitle" class="modal-head">A little plan for Aysola</div>
+                <div class="modal-sub" style="margin-top:6px">
+                    This helper gently reminds you to sip water and track progress toward <strong>2.7 L</strong> daily.
+                    Small steps beat nothing — we remind every <strong>45 minutes</strong> while this tab is open.
+                </div>
+
+                <div style="margin-top:8px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+                    <div
+                        style="background:#fff;padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.04);text-align:center">
+                        <strong>1 cup</strong>
+                        <div style="color:var(--muted)">225 ml</div>
+                    </div>
+                    <div
+                        style="background:#fff;padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.04);text-align:center">
+                        <strong>Small</strong>
+                        <div style="color:var(--muted)">600 ml (¼ / ½ / full)</div>
+                    </div>
+                    <div
+                        style="background:#fff;padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.04);text-align:center">
+                        <strong>Big</strong>
+                        <div style="color:var(--muted)">1500 ml (½ / full)</div>
+                    </div>
+                </div>
+
+                <div style="margin-top:12px;color:var(--muted)">
+                    Drinking enough water can reduce headaches and generally improve energy. When you reach the daily
+                    target, the page celebrates 🎉.
+                </div>
+
+                <div style="margin-top:14px;display:flex;gap:10px;align-items:center">
+                    <button class="btn" id="btnGotIt">Got it 💧</button>
+                    <button class="btn ghost" id="btnDontShow">Don't show again</button>
+                </div>
+
+            </div>
+
+            <div class="modal-right">
+                <div style="text-align:center">
+                    <div style="font-size:78px;color:var(--accent);line-height:0.9">💧</div>
+                    <div style="font-weight:800;color:var(--accent);margin-top:6px">2.7 L / day</div>
+                </div>
+                <div style="margin-top:12px;text-align:center;color:var(--muted)">
+                    You can re-open this modal anytime with the <strong>How it Works ❓</strong> button in the header.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* Hydrate Aysola — updated single-file
+           - No big cup: uses small cups tiles only
+           - Responsive + intro modal shown first time (localStorage)
+           - sessionStorage + localStorage for data
+        */
+
+        const DAILY_GOAL_ML = 2700;
+        const CUP_ML = 225;
+        const DEFAULT_REMINDER_MINUTES = 45;
+        const REMINDER_MS = DEFAULT_REMINDER_MINUTES * 60 * 1000;
+
+        const KEYS = {
+            HISTORY: 'hydrate_history_v2',
+            STREAK: 'hydrate_streak_v2',
+            SEEN_MODAL: 'hydrate_seen_how_v2',
+            SESSION: 'hydrate_session_v2'
+        };
+
+        const dom = {
+            todayDate: document.getElementById('todayDate'),
+            mainProgress: document.getElementById('mainProgress'),
+            progressText: document.getElementById('progressText'),
+            progressPercent: document.getElementById('progressPercent'),
+            miniCups: document.getElementById('miniCups'),
+            statToday: document.getElementById('statToday'),
+            statWeek: document.getElementById('statWeek'),
+            statMonth: document.getElementById('statMonth'),
+            statTodayCups: document.getElementById('statTodayCups'),
+            streakCount: document.getElementById('streakCount'),
+            bestStreak: document.getElementById('bestStreak'),
+            statWeekDays: document.getElementById('statWeekDays'),
+            statMonthDays: document.getElementById('statMonthDays'),
+            happyMessage: document.getElementById('happyMessage'),
+            btnStartReminders: document.getElementById('btnStartReminders'),
+            btnStopReminders: document.getElementById('btnStopReminders'),
+            btnResetDay: document.getElementById('btnResetDay'),
+            btnTestNotify: document.getElementById('btnTestNotify'),
+            btnHowItWorks: document.getElementById('btnHowItWorks'),
+            howModal: document.getElementById('howModal'),
+            btnGotIt: document.getElementById('btnGotIt'),
+            btnDontShow: document.getElementById('btnDontShow'),
+            btnExport: document.getElementById('btnExport'),
+            customInput: document.getElementById('customInput')
+        };
+
+        let reminderInterval = null;
+
+        /* Utilities */
+        function todayISO(offset = 0) {
+            const d = new Date();
+            d.setDate(d.getDate() + offset);
+            d.setHours(0, 0, 0, 0);
+            return d.toISOString().slice(0, 10);
+        }
+        function fmt(n) { return Math.round(n) + ' ml' }
+
+        /* Storage helpers */
+        function loadHistory() { try { return JSON.parse(localStorage.getItem(KEYS.HISTORY) || '{}') } catch (e) { return {}; } }
+        function saveHistory(h) { localStorage.setItem(KEYS.HISTORY, JSON.stringify(h)); }
+        function loadStreak() { try { return JSON.parse(localStorage.getItem(KEYS.STREAK) || '{"current":0,"best":0,"lastSuccess":null}') } catch (e) { return { current: 0, best: 0, lastSuccess: null } } }
+        function saveStreak(s) { localStorage.setItem(KEYS.STREAK, JSON.stringify(s)); }
+        function loadSession() { try { return JSON.parse(sessionStorage.getItem(KEYS.SESSION) || '{}') } catch (e) { return {}; } }
+        function saveSession(s) { sessionStorage.setItem(KEYS.SESSION, JSON.stringify(s)); }
+
+        /* Init */
+        (function init() {
+            dom.todayDate.textContent = new Date().toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' });
+            renderMiniCups();
+
+            // restore today's ml either from session or history
+            const session = loadSession();
+            const hist = loadHistory();
+            const t = todayISO();
+            const todayMl = session.todayMl || hist[t] || 0;
+            saveSession({ todayMl });
+
+            updateUI();
+            recalcStats();
+
+            dom.btnStartReminders.addEventListener('click', startReminders);
+            dom.btnStopReminders.addEventListener('click', stopReminders);
+            dom.btnResetDay.addEventListener('click', resetDay);
+            dom.btnTestNotify.addEventListener('click', testNotification);
+            dom.btnHowItWorks.addEventListener('click', showHowModal);
+            dom.btnGotIt.addEventListener('click', gotItModal);
+            dom.btnDontShow.addEventListener('click', dontShowModal);
+            dom.btnExport.addEventListener('click', exportJSON);
+
+            // first-time modal
+            const seen = localStorage.getItem(KEYS.SEEN_MODAL);
+            if (!seen) {
+                showHowModal();
+            }
+
+            // storage listener for multi-tab
+            window.addEventListener('storage', (ev) => {
+                if (ev.key === KEYS.HISTORY || ev.key === KEYS.STREAK) {
+                    updateUI(); recalcStats(); updateMiniCups();
+                }
+            });
+
+            // save session periodically
+            setInterval(() => { const s = loadSession(); saveSession(s); }, 20_000);
+
+            // day-end check near midnight (optional)
+            setInterval(checkDayEnd, 30 * 1000);
+        })();
+
+        /* Add amount */
+        function addAmount(ml) {
+            if (!ml || ml <= 0) return;
+            const today = todayISO();
+            const session = loadSession();
+            session.todayMl = (session.todayMl || 0) + ml;
+            saveSession(session);
+
+            const hist = loadHistory();
+            hist[today] = (hist[today] || 0) + ml;
+            saveHistory(hist);
+
+            animateProgress();
+            recalcStats();
+
+            if (hist[today] >= DAILY_GOAL_ML) onGoalReached(today);
+        }
+        function customAdd() { const v = Number(dom.customInput.value || 0); if (!v || v <= 0) { alert('Enter a positive ml amount'); return } dom.customInput.value = ''; addAmount(v); }
+
+        /* UI updates */
+        function updateUI() {
+            const session = loadSession();
+            const hist = loadHistory();
+            const today = todayISO();
+            const todayMl = hist[today] || session.todayMl || 0;
+            const percent = Math.min(100, Math.round((todayMl / DAILY_GOAL_ML) * 100));
+            dom.progressText.textContent = `${Math.round(todayMl)} / ${DAILY_GOAL_ML} ml`;
+            dom.progressPercent.textContent = `${percent}%`;
+            dom.mainProgress.style.width = percent + '%';
+            dom.statToday.textContent = fmt(todayMl);
+            dom.statTodayCups.textContent = Math.floor(todayMl / CUP_ML) + ' cups';
+            updateMiniCups();
+        }
+
+        /* Mini cups rendering */
+        function renderMiniCups() {
+            dom.miniCups.innerHTML = '';
+            for (let i = 0; i < 12; i++) {
+                const d = document.createElement('div');
+                d.className = 'mini-cup';
+                d.innerHTML = '<div class="fill" style="height:0%"></div>';
+                dom.miniCups.appendChild(d);
+            }
+            updateMiniCups();
+        }
+        function updateMiniCups() {
+            const hist = loadHistory();
+            const session = loadSession();
+            const today = todayISO();
+            const todayMl = hist[today] || session.todayMl || 0;
+            const cupsFilled = Math.min(12, Math.floor(todayMl / CUP_ML));
+            const cups = Array.from(dom.miniCups.children);
+            cups.forEach((c, idx) => {
+                const fill = c.querySelector('.fill');
+                if (idx < cupsFilled) fill.style.height = '100%'; else fill.style.height = '0%';
+            });
+        }
+
+        /* Animations */
+        function animateProgress() {
+            updateUI();
+            // small visual bounce for main progress done via CSS transition on width
+        }
+
+        /* Reminders */
+        function startReminders() {
+            if (!('Notification' in window)) { alert('Notifications not supported in this browser.'); return; }
+            if (Notification.permission === 'default') {
+                Notification.requestPermission().then(p => {
+                    if (p === 'granted') {
+                        scheduleReminders();
+                        notifyNow('Hydration reminders started', 'I will remind Aysola every 45 minutes while this page is open.');
+                    } else {
+                        scheduleReminders();
+                        alert('Permission denied — reminders will be in-page only.');
+                    }
+                });
+            } else {
+                scheduleReminders();
+                if (Notification.permission === 'granted') notifyNow('Hydration reminders started', 'I will remind Aysola every 45 minutes while this page is open.');
+            }
+        }
+        function scheduleReminders() {
+            stopReminders();
+            reminderInterval = setInterval(() => reminderTick(), REMINDER_MS);
+        }
+        function reminderTick() {
+            if (Notification.permission === 'granted') notifyNow('💧 Time to drink', 'A gentle reminder to take a sip — every little bit helps.');
+            else showToast('💧 Time to drink — take a sip!');
+        }
+        function stopReminders() { if (reminderInterval) { clearInterval(reminderInterval); reminderInterval = null; showToast('Reminders stopped'); } }
+        function notifyNow(title, body) {
+            try {
+                const n = new Notification(title, { body });
+                n.onclick = () => window.focus();
+            } catch (e) { showToast(body); }
+        }
+        function testNotification() {
+            if (!('Notification' in window)) { alert('Notifications not supported.'); return; }
+            if (Notification.permission === 'granted') notifyNow('Test: Hydrate Aysola', 'This is a test notification. If you see this, notifications work.');
+            else Notification.requestPermission().then(p => { if (p === 'granted') notifyNow('Test: Hydrate Aysola', 'Notifications enabled! Test successful.'); else alert('Permission denied or dismissed.'); });
+        }
+
+        /* Goal reached */
+        function onGoalReached(dateISO) {
+            const streak = loadStreak();
+            if (streak.lastSuccess === dateISO) return;
+            const yesterday = todayISO(-1);
+            const hist = loadHistory();
+            const yOk = (hist[yesterday] || 0) >= DAILY_GOAL_ML;
+            streak.current = yOk ? (streak.current || 0) + 1 : 1;
+            streak.lastSuccess = dateISO;
+            if (!streak.best || streak.current > streak.best) streak.best = streak.current;
+            saveStreak(streak);
+            dom.happyMessage.style.display = 'block';
+            setTimeout(() => dom.happyMessage.style.display = 'none', 8000);
+            if (Notification.permission === 'granted') notifyNow('🎉 Goal reached!', `Great! Aysola reached ${DAILY_GOAL_ML} ml today — congrats!`);
+            updateUI(); recalcStats();
+        }
+
+        /* Stats calculator (week/month) */
+        function recalcStats() {
+            const hist = loadHistory();
+            const keys = Object.keys(hist).sort();
+            const now = new Date();
+            const day = now.getDay(); // 0 Sun..6 Sat
+            const diffToMon = ((day + 6) % 7);
+            const weekStart = new Date(now);
+            weekStart.setDate(now.getDate() - diffToMon);
+            weekStart.setHours(0, 0, 0, 0);
+            const weekStartISO = weekStart.toISOString().slice(0, 10);
+
+            let weekTotal = 0, weekDays = 0, monthTotal = 0, monthDays = 0;
+            const year = now.getFullYear(), month = now.getMonth();
+
+            for (const k of keys) {
+                if (!hist[k]) continue;
+                if (k >= weekStartISO) { weekTotal += hist[k]; weekDays++; }
+                const d = new Date(k + 'T00:00:00');
+                if (d.getFullYear() === year && d.getMonth() === month) { monthTotal += hist[k]; monthDays++; }
+            }
+
+            dom.statWeek.textContent = fmt(weekTotal);
+            dom.statWeekDays.textContent = weekDays + ' days';
+            dom.statMonth.textContent = fmt(monthTotal);
+            dom.statMonthDays.textContent = monthDays + ' days';
+
+            const streak = loadStreak();
+            dom.streakCount.textContent = streak.current || 0;
+            dom.bestStreak.textContent = streak.best || 0;
+        }
+
+        /* Reset day */
+        function resetDay() {
+            if (!confirm("Reset today's total? This clears only today's recorded ml.")) return;
+            const today = todayISO();
+            const hist = loadHistory();
+            hist[today] = 0;
+            saveHistory(hist);
+            saveSession({ todayMl: 0 });
+            updateUI(); recalcStats(); showToast('Today reset');
+        }
+
+        /* Modal controls */
+        function showHowModal() { dom.howModal.style.display = 'flex'; }
+        function hideHowModal() { dom.howModal.style.display = 'none'; }
+        function gotItModal() { localStorage.setItem(KEYS.SEEN_MODAL, '1'); hideHowModal(); }
+        function dontShowModal() { localStorage.setItem(KEYS.SEEN_MODAL, '1'); hideHowModal(); showToast('Okay — you can re-open the guide anytime via the header button.'); }
+
+        /* small helpers */
+        function showToast(text) {
+            const t = document.createElement('div');
+            t.textContent = text;
+            Object.assign(t.style, { position: 'fixed', left: '50%', transform: 'translateX(-50%)', bottom: '30px', background: '#111', color: '#fff', padding: '10px 14px', borderRadius: '10px', zIndex: 9999, opacity: 0 });
+            document.body.appendChild(t);
+            requestAnimationFrame(() => t.style.opacity = 1);
+            setTimeout(() => { t.style.opacity = 0; setTimeout(() => t.remove(), 400); }, 3500);
+        }
+
+        /* Export history JSON */
+        function exportJSON() {
+            const hist = loadHistory();
+            const blob = new Blob([JSON.stringify(hist, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = 'hydrate_history.json';
+            document.body.appendChild(a); a.click(); a.remove();
+            URL.revokeObjectURL(url);
+        }
+
+        /* Storage getters/setters for streak */
+        function loadStreak() { try { return JSON.parse(localStorage.getItem(KEYS.STREAK) || '{"current":0,"best":0,"lastSuccess":null}') } catch (e) { return { current: 0, best: 0, lastSuccess: null }; } }
+        function saveStreak(s) { localStorage.setItem(KEYS.STREAK, JSON.stringify(s)); }
+
+        /* Day end warn (if near midnight) */
+        function checkDayEnd() {
+            const now = new Date();
+            if (now.getHours() === 23 && now.getMinutes() >= 50) {
+                if (!sessionStorage.getItem('warned_end_of_day')) {
+                    const hist = loadHistory();
+                    const today = todayISO();
+                    const todayMl = hist[today] || 0;
+                    if (todayMl < DAILY_GOAL_ML) alert(`Day is almost over — you've drank ${todayMl} / ${DAILY_GOAL_ML} ml. Try to finish a little before midnight.`);
+                    sessionStorage.setItem('warned_end_of_day', '1');
+                }
+            }
+        }
+
+        /* Keyboard accessibility for unit tiles */
+        document.getElementById('unitButtons').addEventListener('keydown', (e) => {
+            const target = e.target;
+            if ((e.key === 'Enter' || e.key === ' ') && target && target.classList.contains('unit')) {
+                e.preventDefault();
+                const ml = Number(target.getAttribute('data-ml') || 0);
+                if (ml) addAmount(ml);
+            }
+        });
+
+        /* Update UI every time focus returns (in case of external changes) */
+        window.addEventListener('focus', () => { updateUI(); recalcStats(); updateMiniCups(); });
+
+    </script>
+</body>
+
+</html>
